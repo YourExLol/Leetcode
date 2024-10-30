@@ -1,1 +1,2 @@
-# Leetcode Solutions
+Leetcode Solution Written by Me.
+Peace.
