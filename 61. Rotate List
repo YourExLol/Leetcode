@@ -1,0 +1,51 @@
+## Problem Statement ##
+## 61. Rotate List
+## https://leetcode.com/problems/rotate-list/
+
+############################################### Code begins here ##############################################################
+
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
+class Solution {
+public:
+    ListNode* rotateRight(ListNode* head, int k) {
+
+        if(head==NULL || head->next== NULL) return head;
+
+        int len=0;
+
+        ListNode *it=head,*new_head,*new_tail=head;
+
+        //length of list
+        while(it!=NULL) {
+            len++;
+            it=it->next;
+        }
+
+        int rot=k%len; //rotation value
+
+        if(rot==0) return head;
+
+        //new hold last node that wont be rotated and will become new tail of the rotated list
+        int new_tail_pos=len-rot; 
+        while(--new_tail_pos>0) new_tail=new_tail->next;
+
+        it=new_tail; 
+        new_head=new_tail->next; //new head
+
+        while(it->next!=NULL) it=it->next; //to hold end of orginal unrotated list
+
+        it->next=head; //join old tail node to old head;
+        new_tail->next=NULL;
+        return new_head;
+        
+    }
+};
