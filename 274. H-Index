@@ -1,0 +1,37 @@
+## Problem Statement ##
+## 274. H-Index
+## https://leetcode.com/problems/h-index/
+
+############################################### Code begins here ##############################################################
+
+//using sorting T(nlogn),S(1)
+class Solution {
+public:
+    int hIndex(vector<int>& a) {
+        sort(a.begin(),a.end(),greater<int>());
+        for(int i=0;i<a.size();i++){  //can use binary search here
+            if(i+1>a[i]) return i;
+        }
+        return a.size();
+    }
+};
+
+//Using Counting Sort T(n),S(k)
+
+class Solution {
+public:
+    int hIndex(vector<int>& a) {
+        vector<int> fr(1001,0); //kmax=1000 //frequency array
+
+        for(int i=0;i<a.size();i++) fr[a[i]]++; //storing array
+
+        int s=0;
+        for(int i=1000;i>=0;i--){
+            s+=fr[i]; //no of books with atlease i citations
+            if(i<=s) return i;
+        }
+        
+        return a.size(); //incase a.size()<min(a[i])
+
+    }
+};
