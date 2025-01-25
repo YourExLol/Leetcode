@@ -1,0 +1,31 @@
+188. Best Time to Buy and Sell Stock IV
+
+// Max K Transactions
+
+########### DP Soln ///////////////////////////////////////////////////////
+
+______ Memoization_________________
+
+typedef vector<vector<vector<int>>> typo;
+
+class Solution {
+public:
+    int fn(vector<int> &prices,int buy,int k,int i,typo &memo){
+        if(memo[i][k][buy]!=-1) return memo[i][k][buy];
+
+        if(k<=0 || i>=prices.size()) return 0;
+
+        if(buy){
+            memo[i][k][buy]=fn(prices,0,k,i+1,memo)-prices[i];
+        }
+        else memo[i][k][buy]=fn(prices,1,k-1,i+1,memo)+prices[i];
+
+        return memo[i][k][buy]=max(memo[i][k][buy],fn(prices,buy,k,i+1,memo));
+
+    }
+    int maxProfit(int k,vector<int>& prices) {
+        int n=prices.size();
+        typo memo(n+1,vector<vector<int>>(k+1,vector<int>(2,-1)));
+        return fn(prices,1,k,0,memo);
+    }
+};
